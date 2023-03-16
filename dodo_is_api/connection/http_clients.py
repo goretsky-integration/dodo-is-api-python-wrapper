@@ -26,32 +26,34 @@ def get_http_client_config(*, country_code: str, timeout: int = 60) -> dict:
 
 
 @contextlib.contextmanager
-def closing_http_client(*, country_code: str) -> httpx.Client:
+def closing_http_client(*, country_code: str, timeout: int = 60) -> httpx.Client:
     """Sync HTTP client for Dodo IS API connection.
     Use only with context manager!
 
     Args:
         country_code: country code defined in ISO 3166.
+        timeout: HTTP timeout.
 
     Returns:
         Pre-configured httpx.Client.
     """
-    config = get_http_client_config(country_code=country_code)
+    config = get_http_client_config(country_code=country_code, timeout=timeout)
     with httpx.Client(**config) as http_client:
         yield http_client
 
 
 @contextlib.asynccontextmanager
-async def closing_async_httpx_client(*, country_code: str) -> httpx.AsyncClient:
+async def closing_async_httpx_client(*, country_code: str, timeout: int = 60) -> httpx.AsyncClient:
     """Async HTTP client for Dodo IS API connection.
     Use only with async context manager!
 
     Args:
         country_code: country code defined in ISO 3166.
+        timeout: HTTP timeout.
 
     Returns:
         Pre-configured httpx.AsyncClient.
     """
-    config = get_http_client_config(country_code=country_code)
+    config = get_http_client_config(country_code=country_code, timeout=timeout)
     async with httpx.AsyncClient(**config) as http_client:
         yield http_client
