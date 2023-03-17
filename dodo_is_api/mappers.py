@@ -19,7 +19,7 @@ def map_late_delivery_voucher_dto(late_delivery_voucher: dict) -> models.LateDel
         order_id=UUID(late_delivery_voucher['orderId']),
         order_number=late_delivery_voucher['orderNumber'],
         order_accepted_at_local=datetime.fromisoformat(late_delivery_voucher['orderAcceptedAtLocal']),
-        unit_id=UUID(late_delivery_voucher['unitId']),
+        unit_uuid=UUID(late_delivery_voucher['unitId']),
         predicted_delivery_time_local=datetime.fromisoformat(late_delivery_voucher['predictedDeliveryTimeLocal']),
         order_fulfilment_flag_at_local=order_fulfilment_flag_at_local,
         delivery_deadline_local=datetime.fromisoformat(late_delivery_voucher['deliveryDeadlineLocal']),

@@ -12,7 +12,7 @@ class LateDeliveryVoucher:
     order_id: UUID
     order_number: str
     order_accepted_at_local: datetime.datetime
-    unit_id: UUID
+    unit_uuid: UUID
     predicted_delivery_time_local: datetime.datetime
     order_fulfilment_flag_at_local: datetime.datetime | None
     delivery_deadline_local: datetime.datetime
