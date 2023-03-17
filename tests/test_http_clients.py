@@ -1,7 +1,7 @@
 import httpx
 import pytest
 
-from connection.http_clients import get_http_client_config, closing_http_client, closing_async_httpx_client
+from dodo_is_api.connection.http_clients import get_http_client_config, closing_http_client, closing_async_httpx_client
 
 
 @pytest.mark.parametrize(
