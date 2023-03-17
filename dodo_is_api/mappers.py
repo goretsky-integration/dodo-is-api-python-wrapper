@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-import models
+from . import models
 
 __all__ = (
     'map_late_delivery_voucher_dto',
