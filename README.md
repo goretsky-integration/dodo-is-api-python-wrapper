@@ -1,5 +1,13 @@
 # 🍕 Dodo IS API Wrapper
 
+---
+<p align="center">
+<a href="https://github.com/goretsky-integration/dodo-is-api-python-wrapper/actions/workflows/unittest.yaml">
+<img src="https://github.com/goretsky-integration/dodo-is-api-python-wrapper/actions/workflows/unittest.yaml/badge.svg" alt="Test badge">
+</a>
+<img src="https://img.shields.io/badge/python-3.11-brightgreen" alt="python">
+</p>
+
 #### 📝 [Changelog](./CHANGELOG.md) is here.
 
 ### 🧪 Usage:
@@ -28,7 +36,6 @@ with closing_http_client(access_token=access_token, country_code=country_code) a
             to_date=to_date,
             units=units
     ):
-        
         # map to dataclass DTO if you need
         late_delivery_voucher_dtos = [
             map_late_delivery_voucher_dto(late_delivery_voucher)
