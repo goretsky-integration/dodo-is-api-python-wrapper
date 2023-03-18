@@ -51,6 +51,18 @@ class DodoISAPIConnection(BaseConnection):
             to_date: datetime.datetime,
             units: Iterable[UUID],
     ) -> list[raw_models.StopSaleByIngredientTypedDict]:
+        """
+        References:
+            Documentation: https://dodo-brands.stoplight.io/docs/dodo-is/846af18915ab3-proizvodstvo-stop-prodazhi-po-ingredientam
+
+        Keyword Args:
+            from_date: start of period in ISO 8601 format.
+            to_date: end of period in ISO 8601 format.
+            units: collection of unit's UUIDs.
+
+        Returns:
+            List of stop sales by ingredients.
+        """
         url = '/production/stop-sales-ingredients'
         request_query_params = {
             'from': from_date.strftime('%Y-%m-%dT%H:%M:%S'),
@@ -70,6 +82,18 @@ class DodoISAPIConnection(BaseConnection):
             to_date: datetime.datetime,
             units: Iterable[UUID],
     ) -> list[raw_models.StopSaleBySalesChannelTypedDict]:
+        """
+        References:
+            Documentation: https://dodo-brands.stoplight.io/docs/dodo-is/6bcaeb26e9f28-proizvodstvo-stop-prodazhi-po-kanalam-prodazh
+
+        Keyword Args:
+            from_date: start of period in ISO 8601 format.
+            to_date: end of period in ISO 8601 format.
+            units: collection of unit's UUIDs.
+
+        Returns:
+            List of stop sales by sales channels.
+        """
         url = '/production/stop-sales-channels'
         request_query_params = {
             'from': from_date.strftime('%Y-%m-%dT%H:%M:%S'),
@@ -89,6 +113,18 @@ class DodoISAPIConnection(BaseConnection):
             to_date: datetime.datetime,
             units: Iterable[UUID],
     ) -> list[raw_models.StopSaleByProductTypedDict]:
+        """
+        References:
+            Documentation: https://dodo-brands.stoplight.io/docs/dodo-is/f90f05153cfac-proizvodstvo-stop-prodazhi-po-produktam
+
+        Keyword Args:
+            from_date: start of period in ISO 8601 format.
+            to_date: end of period in ISO 8601 format.
+            units: collection of unit's UUIDs.
+
+        Returns:
+            List of stop sales by products.
+        """
         url = '/production/stop-sales-products'
         request_query_params = {
             'from': from_date.strftime('%Y-%m-%dT%H:%M:%S'),
