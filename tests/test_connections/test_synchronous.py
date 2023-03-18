@@ -2,6 +2,7 @@ import httpx
 import pytest
 
 from dodo_is_api.connection.synchronous import DodoISAPIConnection
+from dodo_is_api.models import raw as raw_models
 
 
 @pytest.fixture
@@ -59,3 +60,128 @@ def test_get_delivery_vouchers_multiple_pages(httpx_mock, faker, dodo_is_api_con
 
     assert next(response_iterator) == [{'hello': 'world'}]
     assert next(response_iterator) == [{'the': 'end'}]
+
+
+@pytest.mark.parametrize(
+    'response_json',
+    [
+        {
+            'id': 'fa617e5baecc9fa211edbdc41c461c5a',
+            'unitId': '000d3a229ab480d111e7ac174322df90',
+            'unitName': 'Tallinn-2',
+            'salesChannelName': 'Takeaway',
+            'reason': 'Нехватка курьеров',
+            'startedAt': '2023-03-08T17:15:50',
+            'endedAt': None,
+            'stoppedByUserId': '0022487fe9f3bb2811ebc926c8dcd08f',
+            'resumedByUserId': None,
+            'channelStopType': 'Redirection',
+        },
+        {
+            'id': 'fa617e5baecc9fa211edbdc41c461c5a',
+            'unitId': '000d3a229ab480d111e7ac174322df90',
+            'unitName': 'Tallinn-2',
+            'salesChannelName': 'Dine-in',
+            'reason': 'Нехватка курьеров',
+            'startedAt': '2023-03-08T17:15:50',
+            'endedAt': None,
+            'stoppedByUserId': '0022487fe9f3bb2811ebc926c8dcd08f',
+            'resumedByUserId': None,
+            'channelStopType': 'Complete',
+        },
+    ]
+)
+def test_get_stop_sales_by_sales_channels(
+        httpx_mock,
+        faker,
+        dodo_is_api_connection,
+        response_json: raw_models.StopSaleBySalesChannelTypedDict,
+):
+    httpx_mock.add_response(json={'stopSalesBySalesChannels': [response_json]})
+    assert dodo_is_api_connection.get_stop_sales_by_sales_channels(
+        from_date=faker.date_time(),
+        to_date=faker.date_time(),
+        units=[],
+    ) == [response_json]
+
+
+@pytest.mark.parametrize(
+    'response_json',
+    [
+        {
+            'id': 'ca9dc3033f1586be11edb9990930994f',
+            'unitId': '000d3a229ab480d111e7ac174322df90',
+            'unitName': 'Tallinn-2',
+            'ingredientName': 'Siirup postmix Cola Zero / Сироп Кола Зеро',
+            'reason': 'Equipment broke',
+            'startedAt': '2023-03-03T09:57:25',
+            'endedAt': '2023-03-09T21:35:52',
+            'stoppedByUserId': '000d3a23750ca94a11e8041840883175',
+            'resumedByUserId': '000d3a23750ca94a11e8041840883175',
+        },
+        {
+            'id': '8e25311986e8baf711edc40feb50d01b',
+            'unitId': '000d3a2bf1aba95511ea00d5a080e033',
+            'unitName': 'Tallinn-3',
+            'ingredientName': 'Jäätis Vanilla Pecan Blondie ',
+            'reason': 'It run out at pizzeria',
+            'startedAt': '2023-03-16T17:33:37',
+            'endedAt': None,
+            'stoppedByUserId': '0022487fe9f3bb2c11eca1447bbf3604',
+            'resumedByUserId': None,
+        },
+    ]
+)
+def test_get_stop_sales_by_ingredients(
+        httpx_mock,
+        faker,
+        dodo_is_api_connection,
+        response_json: raw_models.StopSaleByIngredientTypedDict,
+):
+    httpx_mock.add_response(json={'stopSalesByIngredients': [response_json]})
+    assert dodo_is_api_connection.get_stop_sales_by_ingredients(
+        from_date=faker.date_time(),
+        to_date=faker.date_time(),
+        units=[],
+    ) == [response_json]
+
+
+@pytest.mark.parametrize(
+    'response_json',
+    [
+        {
+            'id': 'fa617e5baecca00e11edbdfe0663c788',
+            'unitId': '000d3a229ab480d111e7ac174322df90',
+            'unitName': 'Tallinn-2',
+            'productName': "Jäätis Hazel-nuttin' but Chocolate Sundae",
+            'reason': 'It run out on defrost',
+            'startedAt': '2023-03-09T00:10:24',
+            'endedAt': '2023-03-13T11:40:20',
+            'stoppedByUserId': '0022487fe9f3bb2811ebc926c8dcd08f',
+            'resumedByUserId': 'a6635fd79244b60c11edc027bf370edf',
+        },
+        {
+            'id': '8e25311986e8baf811edc40feb55c195',
+            'unitId': '000d3a2bf1aba95511ea00d5a080e033',
+            'unitName': 'Tallinn-3',
+            'productName': 'Jäätis Vanilla Pecan Blondie',
+            'reason': 'It run out at pizzeria',
+            'startedAt': '2023-03-16T17:33:37',
+            'endedAt': None,
+            'stoppedByUserId': '0022487fe9f3bb2c11eca1447bbf3604',
+            'resumedByUserId': None,
+        },
+    ]
+)
+def test_get_stop_sales_by_products(
+        httpx_mock,
+        faker,
+        dodo_is_api_connection,
+        response_json: raw_models.StopSaleByIngredientTypedDict,
+):
+    httpx_mock.add_response(json={'stopSalesByProducts': [response_json]})
+    assert dodo_is_api_connection.get_stop_sales_by_products(
+        from_date=faker.date_time(),
+        to_date=faker.date_time(),
+        units=[],
+    ) == [response_json]
