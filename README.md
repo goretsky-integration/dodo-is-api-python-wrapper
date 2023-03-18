@@ -5,6 +5,9 @@
 <a href="https://github.com/goretsky-integration/dodo-is-api-python-wrapper/actions/workflows/unittest.yaml">
 <img src="https://github.com/goretsky-integration/dodo-is-api-python-wrapper/actions/workflows/unittest.yaml/badge.svg" alt="Test badge">
 </a>
+<a href="https://codecov.io/gh/goretsky-integration/dodo-is-api-python-wrapper">
+<img src="https://codecov.io/gh/goretsky-integration/dodo-is-api-python-wrapper/branch/main/graph/badge.svg?token=unzlMmAjsD"/>
+</a>
 <img src="https://img.shields.io/badge/python-3.11-brightgreen" alt="python">
 </p>
 
