@@ -3,8 +3,7 @@ from uuid import UUID
 
 import pytest
 
-import mappers
-import models
+from dodo_is_api import mappers, models
 
 
 @pytest.mark.parametrize(
@@ -25,7 +24,7 @@ import models
                 models.LateDeliveryVoucher(
                     order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'), order_number='95',
                     order_accepted_at_local=datetime.datetime(2023, 3, 7, 16, 59, 45),
-                    unit_id=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
+                    unit_uuid=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
                     predicted_delivery_time_local=datetime.datetime(2023, 3, 7, 17, 39, 45),
                     order_fulfilment_flag_at_local=datetime.datetime(2023, 3, 7, 18, 15, 43),
                     delivery_deadline_local=datetime.datetime(2023, 3, 7, 17, 59, 45),
@@ -48,7 +47,7 @@ import models
                 models.LateDeliveryVoucher(
                     order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'), order_number='95',
                     order_accepted_at_local=datetime.datetime(2023, 3, 7, 16, 59, 45),
-                    unit_id=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
+                    unit_uuid=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
                     predicted_delivery_time_local=datetime.datetime(2023, 3, 7, 17, 39, 45),
                     order_fulfilment_flag_at_local=datetime.datetime(2023, 3, 7, 18, 15, 43),
                     delivery_deadline_local=datetime.datetime(2023, 3, 7, 17, 59, 45),
@@ -71,7 +70,7 @@ import models
                 models.LateDeliveryVoucher(
                     order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'), order_number='95',
                     order_accepted_at_local=datetime.datetime(2023, 3, 7, 16, 59, 45),
-                    unit_id=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
+                    unit_uuid=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
                     predicted_delivery_time_local=datetime.datetime(2023, 3, 7, 17, 39, 45),
                     order_fulfilment_flag_at_local=None,
                     delivery_deadline_local=datetime.datetime(2023, 3, 7, 17, 59, 45),
