@@ -1,5 +1,5 @@
 import datetime
-from typing import Iterable, Generator
+from collections.abc import Iterable, Generator
 from uuid import UUID
 
 import httpx
