@@ -5,6 +5,7 @@ __all__ = (
     'StopSaleByIngredientTypedDict',
     'StopSaleBySalesChannelTypedDict',
     'StopSaleByProductTypedDict',
+    'UnitDeliveryStatisticsTypedDict',
 )
 
 
@@ -30,3 +31,19 @@ class StopSaleByIngredientTypedDict(StopSaleTypedDict):
 
 class StopSaleByProductTypedDict(StopSaleTypedDict):
     productName: str
+
+
+class UnitDeliveryStatisticsTypedDict(TypedDict):
+    unitId: str
+    unitName: str
+    deliverySales: int
+    deliveryOrdersCount: int
+    avgDeliveryOrderFulfillmentTime: int
+    avgCookingTime: int
+    avgHeatedShelfTime: int
+    avgOrderTripTime: int
+    lateOrdersCount: int
+    tripsCount: int
+    tripsDuration: int
+    couriersShiftsDuration: int
+    ordersWithCourierAppCount: int
