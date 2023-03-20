@@ -10,6 +10,7 @@ __all__ = (
     'map_stop_sale_by_sales_channel_dto',
     'map_stop_sale_by_product_dto',
     'map_stop_sale_by_ingredient_dto',
+    'map_unit_delivery_statistics_dto',
 )
 
 
@@ -33,17 +34,23 @@ def parse_to_uuid_or_none(value: str | None) -> UUID | None | NoReturn:
             raise ValueError('Invalid type')
 
 
-def map_late_delivery_voucher_dto(late_delivery_voucher: dict) -> models.LateDeliveryVoucher:
+def map_late_delivery_voucher_dto(
+        late_delivery_voucher: dict) -> models.LateDeliveryVoucher:
     return models.LateDeliveryVoucher(
         order_id=UUID(late_delivery_voucher['orderId']),
         order_number=late_delivery_voucher['orderNumber'],
-        order_accepted_at_local=datetime.fromisoformat(late_delivery_voucher['orderAcceptedAtLocal']),
+        order_accepted_at_local=datetime.fromisoformat(
+            late_delivery_voucher['orderAcceptedAtLocal']),
         unit_uuid=UUID(late_delivery_voucher['unitId']),
-        predicted_delivery_time_local=datetime.fromisoformat(late_delivery_voucher['predictedDeliveryTimeLocal']),
-        order_fulfilment_flag_at_local=parse_to_datetime_or_none(late_delivery_voucher['orderFulfilmentFlagAtLocal']),
-        delivery_deadline_local=datetime.fromisoformat(late_delivery_voucher['deliveryDeadlineLocal']),
+        predicted_delivery_time_local=datetime.fromisoformat(
+            late_delivery_voucher['predictedDeliveryTimeLocal']),
+        order_fulfilment_flag_at_local=parse_to_datetime_or_none(
+            late_delivery_voucher['orderFulfilmentFlagAtLocal']),
+        delivery_deadline_local=datetime.fromisoformat(
+            late_delivery_voucher['deliveryDeadlineLocal']),
         issuer_name=late_delivery_voucher['issuerName'],
-        courier_staff_id=parse_to_uuid_or_none(late_delivery_voucher['courierStaffId']),
+        courier_staff_id=parse_to_uuid_or_none(
+            late_delivery_voucher['courierStaffId']),
     )
 
 
@@ -56,11 +63,16 @@ def map_stop_sale_by_sales_channel_dto(
         unit_name=stop_sale_by_sales_channel['unitName'],
         reason=stop_sale_by_sales_channel['reason'],
         stopped_by_user_id=UUID(stop_sale_by_sales_channel['stoppedByUserId']),
-        resumed_by_user_id=parse_to_uuid_or_none(stop_sale_by_sales_channel['resumedByUserId']),
-        started_at=datetime.fromisoformat(stop_sale_by_sales_channel['startedAt']),
-        ended_at=parse_to_datetime_or_none(stop_sale_by_sales_channel['endedAt']),
-        sales_channel_name=models.SalesChannel(stop_sale_by_sales_channel['salesChannelName']),
-        channel_stop_type=models.ChannelStopType(stop_sale_by_sales_channel['channelStopType']),
+        resumed_by_user_id=parse_to_uuid_or_none(
+            stop_sale_by_sales_channel['resumedByUserId']),
+        started_at=datetime.fromisoformat(
+            stop_sale_by_sales_channel['startedAt']),
+        ended_at=parse_to_datetime_or_none(
+            stop_sale_by_sales_channel['endedAt']),
+        sales_channel_name=models.SalesChannel(
+            stop_sale_by_sales_channel['salesChannelName']),
+        channel_stop_type=models.ChannelStopType(
+            stop_sale_by_sales_channel['channelStopType']),
     )
 
 
@@ -73,7 +85,8 @@ def map_stop_sale_by_ingredient_dto(
         unit_name=stop_sale_by_ingredient['unitName'],
         reason=stop_sale_by_ingredient['reason'],
         stopped_by_user_id=UUID(stop_sale_by_ingredient['stoppedByUserId']),
-        resumed_by_user_id=parse_to_uuid_or_none(stop_sale_by_ingredient['resumedByUserId']),
+        resumed_by_user_id=parse_to_uuid_or_none(
+            stop_sale_by_ingredient['resumedByUserId']),
         started_at=datetime.fromisoformat(stop_sale_by_ingredient['startedAt']),
         ended_at=parse_to_datetime_or_none(stop_sale_by_ingredient['endedAt']),
         ingredient_name=stop_sale_by_ingredient['ingredientName'],
@@ -89,8 +102,29 @@ def map_stop_sale_by_product_dto(
         unit_name=stop_sale_by_product['unitName'],
         reason=stop_sale_by_product['reason'],
         stopped_by_user_id=UUID(stop_sale_by_product['stoppedByUserId']),
-        resumed_by_user_id=parse_to_uuid_or_none(stop_sale_by_product['resumedByUserId']),
+        resumed_by_user_id=parse_to_uuid_or_none(
+            stop_sale_by_product['resumedByUserId']),
         started_at=datetime.fromisoformat(stop_sale_by_product['startedAt']),
         ended_at=parse_to_datetime_or_none(stop_sale_by_product['endedAt']),
         product_name=stop_sale_by_product['productName'],
+    )
+
+
+def map_unit_delivery_statistics_dto(
+        unit_delivery_statistics: raw_models.UnitDeliveryStatisticsTypedDict,
+) -> models.UnitDeliveryStatistics:
+    return models.UnitDeliveryStatistics(
+        unit_uuid=UUID(unit_delivery_statistics['unitId']),
+        unit_name=unit_delivery_statistics['unitName'],
+        delivery_sales=unit_delivery_statistics['deliverySales'],
+        delivery_orders_count=unit_delivery_statistics['deliveryOrdersCount'],
+        average_delivery_order_fulfillment_time=unit_delivery_statistics['avgDeliveryOrderFulfillmentTime'],
+        average_cooking_time=unit_delivery_statistics['avgCookingTime'],
+        average_heated_shelf_time=unit_delivery_statistics['avgHeatedShelfTime'],
+        average_order_trip_time=unit_delivery_statistics['avgOrderTripTime'],
+        late_orders_count=unit_delivery_statistics['lateOrdersCount'],
+        trips_count=unit_delivery_statistics['tripsCount'],
+        trips_duration=unit_delivery_statistics['tripsDuration'],
+        couriers_shifts_duration=unit_delivery_statistics['couriersShiftsDuration'],
+        orders_with_courier_app_count=unit_delivery_statistics['ordersWithCourierAppCount'],
     )
