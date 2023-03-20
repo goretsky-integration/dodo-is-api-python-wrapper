@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dodo-is-api"
-version = "0.3.0"
+version = "0.4.0"
 description = ""
 authors = ["Eldos <eldos.baktybekov@gmail.com>"]
 readme = "README.md"
