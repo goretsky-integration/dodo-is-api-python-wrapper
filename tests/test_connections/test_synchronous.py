@@ -24,8 +24,12 @@ def dodo_is_api_connection(http_client) -> DodoISAPIConnection:
         [{}],
     ]
 )
-def test_get_delivery_vouchers_ok(httpx_mock, faker, dodo_is_api_connection: DodoISAPIConnection, vouchers: list[dict]):
-    httpx_mock.add_response(status_code=200, json={'isEndOfListReached': True, 'vouchers': vouchers})
+def test_get_delivery_vouchers_ok(httpx_mock, faker,
+                                  dodo_is_api_connection: DodoISAPIConnection,
+                                  vouchers: list[dict]):
+    httpx_mock.add_response(status_code=200, json={
+        'isEndOfListReached': True, 'vouchers': vouchers
+    })
     response_iterator = dodo_is_api_connection.iter_late_delivery_vouchers(
         from_date=faker.date_time(),
         to_date=faker.date_time(),
@@ -34,7 +38,8 @@ def test_get_delivery_vouchers_ok(httpx_mock, faker, dodo_is_api_connection: Dod
     assert tuple(response_iterator)[0] == vouchers
 
 
-def test_get_delivery_vouchers_multiple_pages(httpx_mock, faker, dodo_is_api_connection):
+def test_get_delivery_vouchers_multiple_pages(httpx_mock, faker,
+                                              dodo_is_api_connection):
     is_end_of_list_reached = False
 
     def get_response(request: httpx.Request):
@@ -181,6 +186,40 @@ def test_get_stop_sales_by_products(
 ):
     httpx_mock.add_response(json={'stopSalesByProducts': [response_json]})
     assert dodo_is_api_connection.get_stop_sales_by_products(
+        from_date=faker.date_time(),
+        to_date=faker.date_time(),
+        units=[],
+    ) == [response_json]
+
+
+@pytest.mark.parametrize(
+    'response_json',
+    [
+        {
+            'unitId': '000d3a23b0dc80d911e6b24f4a188a9f',
+            'unitName': 'Москва 4-1',
+            'deliverySales': 4541294,
+            'deliveryOrdersCount': 3578,
+            'avgDeliveryOrderFulfillmentTime': 1799,
+            'avgCookingTime': 696,
+            'avgHeatedShelfTime': 167,
+            'avgOrderTripTime': 936,
+            'lateOrdersCount': 1,
+            'ordersWithCourierAppCount': 3425,
+            'tripsCount': 3200,
+            'tripsDuration': 5305266,
+            'couriersShiftsDuration': 7908714,
+        },
+    ],
+)
+def test_get_delivery_statistics(
+        httpx_mock,
+        faker,
+        dodo_is_api_connection,
+        response_json: raw_models.UnitDeliveryStatisticsTypedDict,
+):
+    httpx_mock.add_response(json={'unitsStatistics': [response_json]})
+    assert dodo_is_api_connection.get_delivery_statistics(
         from_date=faker.date_time(),
         to_date=faker.date_time(),
         units=[],
