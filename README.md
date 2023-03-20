@@ -1,7 +1,9 @@
+<div align="center">
 <a href="https://dodo-brands.stoplight.io">
-<img src="https://api.huntflow.io/logo/866df3c58ea44c158c6e36010631fd9f.jpg">
+<img width="350px" src="https://api.huntflow.io/logo/866df3c58ea44c158c6e36010631fd9f.jpg">
 </a>
-
+</div>
+    
 <h1 align="center">
 🍕 Dodo IS API Wrapper
 </h1>
