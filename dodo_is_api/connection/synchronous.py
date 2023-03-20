@@ -136,3 +136,34 @@ class DodoISAPIConnection(BaseConnection):
 
         response_data: dict = response.json()
         return response_data['stopSalesByProducts']
+
+    def get_delivery_statistics(
+            self,
+            *,
+            from_date: datetime.datetime,
+            to_date: datetime.datetime,
+            units: Iterable[UUID],
+    ) -> list[raw_models.UnitDeliveryStatisticsTypedDict]:
+        """
+        References:
+            Documentation: https://dodo-brands.stoplight.io/docs/dodo-is/2845c1de4776d-dostavka-statistika.
+
+        Keyword Args:
+            from_date: start of period in ISO 8601 format.
+            to_date: end of period in ISO 8601 format.
+            units: collection of unit's UUIDs.
+
+        Returns:
+            List of unit's delivery statistics.
+        """
+        url = '/delivery/statistics/'
+        request_query_params = {
+            'from': from_date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'to': to_date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'units': concatenate_uuids(units),
+        }
+        response = self.__http_client.get(url, params=request_query_params)
+        raise_for_status(response)
+
+        response_data: dict = response.json()
+        return response_data['unitsStatistics']

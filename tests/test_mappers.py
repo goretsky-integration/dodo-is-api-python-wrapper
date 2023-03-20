@@ -25,14 +25,21 @@ from dodo_is_api.models import raw as raw_models
                     'courierStaffId': '4acab5c63de1b2a911ed04f431217e58',
                 },
                 models.LateDeliveryVoucher(
-                    order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'), order_number='95',
-                    order_accepted_at_local=datetime.datetime(2023, 3, 7, 16, 59, 45),
+                    order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'),
+                    order_number='95',
+                    order_accepted_at_local=datetime.datetime(2023, 3, 7, 16,
+                                                              59, 45),
                     unit_uuid=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
-                    predicted_delivery_time_local=datetime.datetime(2023, 3, 7, 17, 39, 45),
-                    order_fulfilment_flag_at_local=datetime.datetime(2023, 3, 7, 18, 15, 43),
-                    delivery_deadline_local=datetime.datetime(2023, 3, 7, 17, 59, 45),
+                    predicted_delivery_time_local=datetime.datetime(2023, 3, 7,
+                                                                    17, 39, 45),
+                    order_fulfilment_flag_at_local=datetime.datetime(2023, 3, 7,
+                                                                     18, 15,
+                                                                     43),
+                    delivery_deadline_local=datetime.datetime(2023, 3, 7, 17,
+                                                              59, 45),
                     issuer_name='System',
-                    courier_staff_id=UUID('4acab5c6-3de1-b2a9-11ed-04f431217e58'),
+                    courier_staff_id=UUID(
+                        '4acab5c6-3de1-b2a9-11ed-04f431217e58'),
                 ),
         ),
         (
@@ -48,14 +55,21 @@ from dodo_is_api.models import raw as raw_models
                     'courierStaffId': '4acab5c63de1b2a911ed04f431217e58',
                 },
                 models.LateDeliveryVoucher(
-                    order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'), order_number='95',
-                    order_accepted_at_local=datetime.datetime(2023, 3, 7, 16, 59, 45),
+                    order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'),
+                    order_number='95',
+                    order_accepted_at_local=datetime.datetime(2023, 3, 7, 16,
+                                                              59, 45),
                     unit_uuid=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
-                    predicted_delivery_time_local=datetime.datetime(2023, 3, 7, 17, 39, 45),
-                    order_fulfilment_flag_at_local=datetime.datetime(2023, 3, 7, 18, 15, 43),
-                    delivery_deadline_local=datetime.datetime(2023, 3, 7, 17, 59, 45),
+                    predicted_delivery_time_local=datetime.datetime(2023, 3, 7,
+                                                                    17, 39, 45),
+                    order_fulfilment_flag_at_local=datetime.datetime(2023, 3, 7,
+                                                                     18, 15,
+                                                                     43),
+                    delivery_deadline_local=datetime.datetime(2023, 3, 7, 17,
+                                                              59, 45),
                     issuer_name=None,
-                    courier_staff_id=UUID('4acab5c6-3de1-b2a9-11ed-04f431217e58'),
+                    courier_staff_id=UUID(
+                        '4acab5c6-3de1-b2a9-11ed-04f431217e58'),
                 ),
         ),
         (
@@ -71,12 +85,16 @@ from dodo_is_api.models import raw as raw_models
                     'courierStaffId': None,
                 },
                 models.LateDeliveryVoucher(
-                    order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'), order_number='95',
-                    order_accepted_at_local=datetime.datetime(2023, 3, 7, 16, 59, 45),
+                    order_id=UUID('1a710d56-b084-bc09-11ed-bcf829899a1b'),
+                    order_number='95',
+                    order_accepted_at_local=datetime.datetime(2023, 3, 7, 16,
+                                                              59, 45),
                     unit_uuid=UUID('000d3a24-0c71-9a87-11e6-8abbbc04fd69'),
-                    predicted_delivery_time_local=datetime.datetime(2023, 3, 7, 17, 39, 45),
+                    predicted_delivery_time_local=datetime.datetime(2023, 3, 7,
+                                                                    17, 39, 45),
                     order_fulfilment_flag_at_local=None,
-                    delivery_deadline_local=datetime.datetime(2023, 3, 7, 17, 59, 45),
+                    delivery_deadline_local=datetime.datetime(2023, 3, 7, 17,
+                                                              59, 45),
                     issuer_name=None,
                     courier_staff_id=None,
                 ),
@@ -87,7 +105,8 @@ def test_late_delivery_voucher_mapper(
         late_delivery_voucher_raw: dict,
         late_delivery_voucher_dto: models.LateDeliveryVoucher,
 ):
-    assert mappers.map_late_delivery_voucher_dto(late_delivery_voucher_raw) == late_delivery_voucher_dto
+    assert mappers.map_late_delivery_voucher_dto(
+        late_delivery_voucher_raw) == late_delivery_voucher_dto
 
 
 @pytest.mark.parametrize(
@@ -172,7 +191,8 @@ def test_stop_sale_by_product_mapper(
         stop_sale_by_product_raw: raw_models.StopSaleByProductTypedDict,
         stop_sale_by_product_dto: models.StopSaleByProduct,
 ):
-    assert mappers.map_stop_sale_by_product_dto(stop_sale_by_product_raw) == stop_sale_by_product_dto
+    assert mappers.map_stop_sale_by_product_dto(
+        stop_sale_by_product_raw) == stop_sale_by_product_dto
 
 
 @pytest.mark.parametrize(
@@ -232,7 +252,8 @@ def test_stop_sale_by_ingredient_mapper(
         stop_sale_by_ingredient_raw: raw_models.StopSaleByIngredientTypedDict,
         stop_sale_by_ingredient_dto: models.StopSaleByIngredient,
 ):
-    assert mappers.map_stop_sale_by_ingredient_dto(stop_sale_by_ingredient_raw) == stop_sale_by_ingredient_dto
+    assert mappers.map_stop_sale_by_ingredient_dto(
+        stop_sale_by_ingredient_raw) == stop_sale_by_ingredient_dto
 
 
 @pytest.mark.parametrize(
@@ -322,7 +343,8 @@ def test_stop_sale_by_sales_channel_mapper(
         stop_sale_by_sales_channel_raw: raw_models.StopSaleBySalesChannelTypedDict,
         stop_sale_by_sales_channel_dto: models.StopSaleBySalesChannel,
 ):
-    assert mappers.map_stop_sale_by_sales_channel_dto(stop_sale_by_sales_channel_raw) == stop_sale_by_sales_channel_dto
+    assert mappers.map_stop_sale_by_sales_channel_dto(
+        stop_sale_by_sales_channel_raw) == stop_sale_by_sales_channel_dto
 
 
 @pytest.mark.parametrize(
@@ -341,7 +363,8 @@ def test_stop_sale_by_sales_channel_mapper(
         )
     ]
 )
-def test_parse_datetime_or_none(value: str | None, expected: datetime.datetime | None):
+def test_parse_datetime_or_none(value: str | None,
+                                expected: datetime.datetime | None):
     assert mappers.parse_to_datetime_or_none(value) == expected
 
 
@@ -397,3 +420,80 @@ def test_parse_datetime_passed_invalid_type(value: Any):
 def test_parse_uuid_passed_invalid_type(value: Any):
     with pytest.raises(ValueError, match='^Invalid type$'):
         mappers.parse_to_uuid_or_none(value)
+
+
+@pytest.mark.parametrize(
+    'delivery_statistics_raw, delivery_statistics_dto',
+    [
+        (
+                {
+                    'unitId': '000d3a23b0dc80d911e6b24f4a188a9f',
+                    'unitName': 'Москва 4-1',
+                    'deliverySales': 4541294,
+                    'deliveryOrdersCount': 3578,
+                    'avgDeliveryOrderFulfillmentTime': 1799,
+                    'avgCookingTime': 696,
+                    'avgHeatedShelfTime': 167,
+                    'avgOrderTripTime': 936,
+                    'lateOrdersCount': 1,
+                    'ordersWithCourierAppCount': 3425,
+                    'tripsCount': 3200,
+                    'tripsDuration': 5305266,
+                    'couriersShiftsDuration': 7908714,
+                },
+                models.UnitDeliveryStatistics(
+                    unit_uuid=UUID('000d3a23-b0dc-80d9-11e6-b24f4a188a9f'),
+                    unit_name='Москва 4-1',
+                    delivery_sales=4541294,
+                    delivery_orders_count=3578,
+                    average_delivery_order_fulfillment_time=1799,
+                    average_cooking_time=696,
+                    average_heated_shelf_time=167,
+                    average_order_trip_time=936,
+                    late_orders_count=1,
+                    trips_count=3200,
+                    trips_duration=5305266,
+                    couriers_shifts_duration=7908714,
+                    orders_with_courier_app_count=3425,
+                ),
+        ),
+        (
+                {
+                    'unitId': '000d3a26b5b080de11e702b7926eda73',
+                    'unitName': 'Москва 4-2',
+                    'deliverySales': 3661370,
+                    'deliveryOrdersCount': 3045,
+                    'avgDeliveryOrderFulfillmentTime': 1727,
+                    'avgCookingTime': 913,
+                    'avgHeatedShelfTime': 128,
+                    'avgOrderTripTime': 686,
+                    'lateOrdersCount': 24,
+                    'ordersWithCourierAppCount': 2973,
+                    'tripsCount': 2698,
+                    'tripsDuration': 2975173,
+                    'couriersShiftsDuration': 5028330,
+                },
+                models.UnitDeliveryStatistics(
+                    unit_uuid=UUID('000d3a26-b5b0-80de-11e7-02b7926eda73'),
+                    unit_name='Москва 4-2',
+                    delivery_sales=3661370,
+                    delivery_orders_count=3045,
+                    average_delivery_order_fulfillment_time=1727,
+                    average_cooking_time=913,
+                    average_heated_shelf_time=128,
+                    average_order_trip_time=686,
+                    late_orders_count=24,
+                    trips_count=2698,
+                    trips_duration=2975173,
+                    couriers_shifts_duration=5028330,
+                    orders_with_courier_app_count=2973,
+                ),
+        ),
+    ],
+)
+def test_delivery_statistics_mapper(
+        delivery_statistics_raw: raw_models.UnitDeliveryStatisticsTypedDict,
+        delivery_statistics_dto: models.UnitDeliveryStatistics,
+):
+    assert mappers.map_unit_delivery_statistics_dto(
+        delivery_statistics_raw) == delivery_statistics_dto
