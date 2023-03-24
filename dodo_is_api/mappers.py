@@ -11,6 +11,7 @@ __all__ = (
     'map_stop_sale_by_product_dto',
     'map_stop_sale_by_ingredient_dto',
     'map_unit_delivery_statistics_dto',
+    'map_courier_order_dto',
 )
 
 
@@ -127,4 +128,39 @@ def map_unit_delivery_statistics_dto(
         trips_duration=unit_delivery_statistics['tripsDuration'],
         couriers_shifts_duration=unit_delivery_statistics['couriersShiftsDuration'],
         orders_with_courier_app_count=unit_delivery_statistics['ordersWithCourierAppCount'],
+    )
+
+
+def map_courier_order_dto(
+        courier_order: raw_models.CourierOrderTypedDict,
+) -> models.CourierOrder:
+    print(courier_order)
+    return models.CourierOrder(
+        courier_staff_id=UUID(courier_order['courierStaffId']),
+        delivery_time=courier_order['deliveryTime'],
+        delivery_transport_name=models.DeliveryTransportName(
+            courier_order['deliveryTransportName'],
+        ),
+        handed_over_to_delivery_at=datetime.fromisoformat(
+            courier_order['handedOverToDeliveryAt'],
+        ),
+        handed_over_to_delivery_at_local=datetime.fromisoformat(
+            courier_order['handedOverToDeliveryAt'],
+        ),
+        heated_shelf_time=courier_order['heatedShelfTime'],
+        is_false_delivery=courier_order['isFalseDelivery'],
+        is_problematic_delivery=courier_order['isProblematicDelivery'],
+        order_assembly_average_time=courier_order['orderAssemblyAvgTime'],
+        order_fulfilment_flag_at=parse_to_datetime_or_none(
+            courier_order['orderFulfilmentFlagAt'],
+        ),
+        order_id=UUID(courier_order['orderId']),
+        order_number=courier_order['orderNumber'],
+        predicted_delivery_time=courier_order['predictedDeliveryTime'],
+        problematic_delivery_reason=courier_order['problematicDeliveryReason'],
+        trip_orders_count=courier_order['tripOrdersCount'],
+        unit_uuid=UUID(courier_order['unitId']),
+        unit_name=courier_order['unitName'],
+        was_late_delivery_voucher_given=courier_order[
+            'wasLateDeliveryVoucherGiven'],
     )
