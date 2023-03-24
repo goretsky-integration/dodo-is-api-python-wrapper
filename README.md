@@ -16,6 +16,7 @@
 <img src="https://codecov.io/gh/goretsky-integration/dodo-is-api-python-wrapper/branch/main/graph/badge.svg?token=unzlMmAjsD"/>
 </a>
 <img src="https://img.shields.io/badge/python-3.11-brightgreen" alt="python">
+<img src="https://img.shields.io/github/license/goretsky-integration/dodo-is-api-python-wrapper" alt="license">
 </p>
 
 ---
