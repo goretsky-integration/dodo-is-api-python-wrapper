@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import TypedDict, Literal
 
 __all__ = (
     'StopSaleTypedDict',
@@ -6,6 +6,7 @@ __all__ = (
     'StopSaleBySalesChannelTypedDict',
     'StopSaleByProductTypedDict',
     'UnitDeliveryStatisticsTypedDict',
+    'CourierOrderTypedDict',
 )
 
 
@@ -47,3 +48,24 @@ class UnitDeliveryStatisticsTypedDict(TypedDict):
     tripsDuration: int
     couriersShiftsDuration: int
     ordersWithCourierAppCount: int
+
+
+class CourierOrderTypedDict(TypedDict):
+    orderId: str
+    orderNumber: str
+    courierStaffId: str
+    unitId: str
+    unitName: str
+    handedOverToDeliveryAt: str
+    predictedDeliveryTime: int
+    deliveryTime: int
+    orderFulfilmentFlagAt: str
+    orderFulfilmentFlagAtLocal: str
+    isFalseDelivery: bool
+    deliveryTransportName: Literal['Vehicle', 'OnFoot', 'Bicycle']
+    tripOrdersCount: int
+    heatedShelfTime: int
+    orderAssemblyAvgTime: int
+    isProblematicDelivery: bool
+    problematicDeliveryReason: str
+    wasLateDeliveryVoucherGiven: bool
