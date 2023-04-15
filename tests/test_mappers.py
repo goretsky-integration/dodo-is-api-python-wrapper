@@ -1,5 +1,4 @@
 import datetime
-import uuid
 from typing import Any
 from uuid import UUID
 
@@ -497,3 +496,86 @@ def test_delivery_statistics_mapper(
 ):
     assert mappers.map_unit_delivery_statistics_dto(
         delivery_statistics_raw) == delivery_statistics_dto
+
+
+@pytest.mark.parametrize(
+    'courier_order_raw, courier_order_dto',
+    [
+        (
+                {
+                    'orderId': '7e7b117b4b3aa5fd11aac9a510916baa',
+                    'orderNumber': '1000-2',
+                    'courierStaffId': '000d3abf84c3aa2e11ec4e7d88190bb1',
+                    'unitId': '000d3a23b0dc80d911e6b24f4a188a9f',
+                    'unitName': 'Москва 4-1',
+                    'handedOverToDeliveryAtLocal': '2023-03-23T18:14:48.2048254Z',
+                    'handedOverToDeliveryAt': '2023-03-23T18:14:48.2048254Z',
+                    'predictedDeliveryTime': 966,
+                    'deliveryTime': 1191,
+                    'orderFulfilmentFlagAtLocal': '2023-03-23T18:34:39.2696181Z',
+                    'orderFulfilmentFlagAt': '2023-03-23T18:34:39.2696181Z',
+                    'isFalseDelivery': False,
+                    'deliveryTransportName': 'Vehicle',
+                    'tripOrdersCount': 1,
+                    'heatedShelfTime': 15,
+                    'orderAssemblyAvgTime': 15,
+                    'isProblematicDelivery': False,
+                    'problematicDeliveryReason': '',
+                    'wasLateDeliveryVoucherGiven': False
+                },
+                models.CourierOrder(
+                    courier_staff_id=UUID(
+                        '000d3abf-84c3-aa2e-11ec-4e7d88190bb1'),
+                    delivery_time=1191,
+                    delivery_transport_name=models.DeliveryTransportName.VEHICLE,
+                    handed_over_to_delivery_at=datetime.datetime(
+                        year=2023,
+                        month=3,
+                        day=23,
+                        hour=18,
+                        minute=14,
+                        second=48,
+                        microsecond=204825,
+                        tzinfo=datetime.timezone.utc,
+                    ),
+                    handed_over_to_delivery_at_local=datetime.datetime(
+                        year=2023,
+                        month=3,
+                        day=23,
+                        hour=18,
+                        minute=14,
+                        second=48,
+                        microsecond=204825,
+                        tzinfo=datetime.timezone.utc,
+                    ),
+                    heated_shelf_time=15,
+                    is_false_delivery=False,
+                    is_problematic_delivery=False,
+                    order_assembly_average_time=15,
+                    order_fulfilment_flag_at=datetime.datetime(
+                        year=2023,
+                        month=3,
+                        day=23,
+                        hour=18,
+                        minute=34,
+                        second=39,
+                        microsecond=269618,
+                        tzinfo=datetime.timezone.utc,
+                    ),
+                    order_id=UUID('7e7b117b-4b3a-a5fd-11aa-c9a510916baa'),
+                    order_number='1000-2',
+                    predicted_delivery_time=966,
+                    problematic_delivery_reason='',
+                    trip_orders_count=1,
+                    unit_uuid=UUID('000d3a23-b0dc-80d9-11e6-b24f4a188a9f'),
+                    unit_name='Москва 4-1',
+                    was_late_delivery_voucher_given=False,
+                )
+        ),
+    ]
+)
+def test_courier_order_mapper(
+        courier_order_raw: raw_models.CourierOrderTypedDict,
+        courier_order_dto: models.CourierOrder,
+):
+    assert mappers.map_courier_order_dto(courier_order_raw) == courier_order_dto
