@@ -134,7 +134,6 @@ def map_unit_delivery_statistics_dto(
 def map_courier_order_dto(
         courier_order: raw_models.CourierOrderTypedDict,
 ) -> models.CourierOrder:
-    print(courier_order)
     return models.CourierOrder(
         courier_staff_id=UUID(courier_order['courierStaffId']),
         delivery_time=courier_order['deliveryTime'],
