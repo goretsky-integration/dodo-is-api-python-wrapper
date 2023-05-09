@@ -199,8 +199,6 @@ class DodoISAPIConnection:
             'skip': skip,
             'take': take,
         }
-        response = self.__http_client.get(url, params=request_query_params)
-        raise_for_status(response)
 
         while True:
             response = self.__http_client.get(url, params=request_query_params)
