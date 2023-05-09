@@ -4,13 +4,13 @@ from uuid import UUID
 
 import httpx
 
-from .base import BaseConnection, concatenate_uuids, raise_for_status
+from .base import concatenate_uuids, raise_for_status
 from ..models import raw as raw_models
 
 __all__ = ('DodoISAPIConnection',)
 
 
-class DodoISAPIConnection(BaseConnection):
+class DodoISAPIConnection:
     __slots__ = ('__http_client',)
 
     def __init__(self, *, http_client: httpx.Client):
@@ -167,3 +167,45 @@ class DodoISAPIConnection(BaseConnection):
 
         response_data: dict = response.json()
         return response_data['unitsStatistics']
+
+    def iter_courier_orders(
+            self,
+            *,
+            from_date: datetime.datetime,
+            to_date: datetime.datetime,
+            units: Iterable[UUID],
+            skip: int = 0,
+            take: int = 1000,
+    ) -> Generator[list[raw_models.CourierOrderTypedDict], None, None]:
+        """
+        References:
+            Documentation: https://dodo-brands.stoplight.io/docs/dodo-is/14c586221ab77-dostavka-zakazy-kurerov.
+
+        Keyword Args:
+            from_date: start of period in ISO 8601 format.
+            to_date: end of period in ISO 8601 format.
+            units: collection of unit's UUIDs.
+            skip: items count to skip.
+            take: items count to take.
+
+        Returns:
+            List of unit's delivery statistics.
+        """
+        url = '/delivery/couriers-orders'
+        request_query_params = {
+            'from': from_date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'to': to_date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'units': concatenate_uuids(units),
+            'skip': skip,
+            'take': take,
+        }
+
+        while True:
+            response = self.__http_client.get(url, params=request_query_params)
+            raise_for_status(response)
+
+            response_data: dict = response.json()
+            yield response_data['couriersOrders']
+            if response_data['isEndOfListReached']:
+                break
+            request_query_params['skip'] += take

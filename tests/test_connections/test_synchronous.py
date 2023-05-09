@@ -224,3 +224,23 @@ def test_get_delivery_statistics(
         to_date=faker.date_time(),
         units=[],
     ) == [response_json]
+
+
+def test_iter_courier_orders_single_page(
+        httpx_mock,
+        faker,
+        dodo_is_api_connection: DodoISAPIConnection,
+):
+    httpx_mock.add_response(
+        status_code=200,
+        json={
+            'isEndOfListReached': True,
+            'couriersOrders': [],
+        },
+    )
+    response_iterator = dodo_is_api_connection.iter_courier_orders(
+        from_date=faker.date_time(),
+        to_date=faker.date_time(),
+        units=[],
+    )
+    assert next(response_iterator) == []
