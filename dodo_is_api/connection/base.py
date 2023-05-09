@@ -1,5 +1,3 @@
-import datetime
-from abc import ABC, abstractmethod
 from collections.abc import Iterable
 from uuid import UUID
 
@@ -8,28 +6,9 @@ import httpx
 from .. import exceptions
 
 __all__ = (
-    'BaseConnection',
     'concatenate_uuids',
     'raise_for_status'
 )
-
-
-class BaseConnection(ABC):
-
-    @abstractmethod
-    def iter_late_delivery_vouchers(
-            self,
-            *,
-            from_date: datetime.datetime,
-            to_date: datetime.datetime,
-            units: Iterable[UUID],
-            skip: int = 0,
-            take: int = 1000,
-    ) -> Iterable[list[dict]]:
-        """
-        Corresponds to this API endpoint:
-        https://dodo-brands.stoplight.io/docs/dodo-is/f3c261f246fc0-dostavka-sertifikaty-za-opozdanie
-        """
 
 
 def concatenate_uuids(uuids: Iterable[UUID], join_symbol: str = ',') -> str:
@@ -58,5 +37,6 @@ def raise_for_status(response: httpx.Response) -> None:
         401: exceptions.UnauthorizedError,
         400: exceptions.BadRequestError,
     }
-    exception_class = status_code_to_exception_class.get(response.status_code, exceptions.DodoISAPIError)
+    exception_class = status_code_to_exception_class.get(response.status_code,
+                                                         exceptions.DodoISAPIError)
     raise exception_class

@@ -4,13 +4,13 @@ from uuid import UUID
 
 import httpx
 
-from .base import BaseConnection, concatenate_uuids, raise_for_status
+from .base import concatenate_uuids, raise_for_status
 from ..models import raw as raw_models
 
 __all__ = ('DodoISAPIConnection',)
 
 
-class DodoISAPIConnection(BaseConnection):
+class DodoISAPIConnection:
     __slots__ = ('__http_client',)
 
     def __init__(self, *, http_client: httpx.Client):
