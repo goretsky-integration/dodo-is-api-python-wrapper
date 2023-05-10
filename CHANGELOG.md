@@ -1,3 +1,13 @@
+# 0.6.0 (2023-05-10)
+
+## Added:
+
+- Add following asynchronous methods:
+  - get_delivery_statistics.
+  - iter_late_delivery_vouchers.
+
+---
+
 # 0.5.0 (2023-05-09)
 
 ## Added:
