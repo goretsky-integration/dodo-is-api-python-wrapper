@@ -3,8 +3,10 @@ from collections.abc import Iterable, Generator
 from uuid import UUID
 
 import httpx
+from structlog.contextvars import bound_contextvars
 
 from .base import concatenate_uuids, raise_for_status
+from ..logger import logger
 from ..models import raw as raw_models
 from ..models.dodo_is_api import SalesChannel
 
@@ -230,8 +232,21 @@ class DodoISAPIConnection:
                 for sales_channel in sales_channels
             )
 
-        response = self.__http_client.get(url, params=request_query_params)
-        raise_for_status(response)
+        with bound_contextvars(
+                url=url,
+                request_query_params=request_query_params,
+        ):
+            logger.info('Request orders handover statistics')
+            response = self.__http_client.get(url, params=request_query_params)
+            logger.info(
+                'Orders handover statistics response',
+                status_code=response.status_code,
+            )
+            raise_for_status(response)
 
-        response_data = response.json()
-        return response_data['ordersHandoverStatistics']
+            response_data = response.json()
+            logger.info(
+                'Decoded orders handover statistics response',
+                response_data=response_data,
+            )
+            return response_data['ordersHandoverStatistics']
