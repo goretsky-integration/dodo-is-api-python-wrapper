@@ -7,6 +7,7 @@ __all__ = (
     'StopSaleByProductTypedDict',
     'UnitDeliveryStatisticsTypedDict',
     'CourierOrderTypedDict',
+    'UnitOrdersHandoverStatistics'
 )
 
 
@@ -69,3 +70,13 @@ class CourierOrderTypedDict(TypedDict):
     isProblematicDelivery: bool
     problematicDeliveryReason: str
     wasLateDeliveryVoucherGiven: bool
+
+
+class UnitOrdersHandoverStatistics(TypedDict):
+    unitId: str
+    unitName: str
+    avgTrackingPendingTime: int
+    avgCookingTime: int
+    avgHeatedShelfTime: int
+    avgOrderHandoverTime: int
+    ordersCount: int

@@ -3,9 +3,12 @@ from collections.abc import Iterable, Generator
 from uuid import UUID
 
 import httpx
+from structlog.contextvars import bound_contextvars
 
 from .base import concatenate_uuids, raise_for_status
+from ..logger import logger
 from ..models import raw as raw_models
+from ..models.dodo_is_api import SalesChannel
 
 __all__ = ('DodoISAPIConnection',)
 
@@ -209,3 +212,41 @@ class DodoISAPIConnection:
             if response_data['isEndOfListReached']:
                 break
             request_query_params['skip'] += take
+
+    def get_orders_handover_statistics(
+            self,
+            from_date: datetime.datetime,
+            to_date: datetime.datetime,
+            units: Iterable[UUID],
+            sales_channels: Iterable[SalesChannel] | None = None,
+    ) -> list[raw_models.UnitOrdersHandoverStatistics]:
+        url = '/production/orders-handover-statistics'
+        request_query_params = {
+            'from': from_date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'to': to_date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'units': concatenate_uuids(units),
+        }
+        if sales_channels is not None:
+            request_query_params['salesChannels'] = ','.join(
+                sales_channel.value.replace('-', '')
+                for sales_channel in sales_channels
+            )
+
+        with bound_contextvars(
+                url=url,
+                request_query_params=request_query_params,
+        ):
+            logger.info('Request orders handover statistics')
+            response = self.__http_client.get(url, params=request_query_params)
+            logger.info(
+                'Orders handover statistics response',
+                status_code=response.status_code,
+            )
+            raise_for_status(response)
+
+            response_data = response.json()
+            logger.info(
+                'Decoded orders handover statistics response',
+                response_data=response_data,
+            )
+            return response_data['ordersHandoverStatistics']

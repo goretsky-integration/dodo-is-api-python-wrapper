@@ -1,10 +1,9 @@
-# 0.6.0 (2023-05-10)
+# 0.6.0 (2023-06-10)
 
-## Added:
+## Addded:
 
-- Add following asynchronous methods:
-  - get_delivery_statistics.
-  - iter_late_delivery_vouchers.
+- Add orders handover statistics API (both sync and async).
+- Add logging via `structlog`.
 
 ---
 

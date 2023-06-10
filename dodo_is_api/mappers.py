@@ -12,6 +12,7 @@ __all__ = (
     'map_stop_sale_by_ingredient_dto',
     'map_unit_delivery_statistics_dto',
     'map_courier_order_dto',
+    'map_unit_orders_handover_statistics',
 )
 
 
@@ -119,15 +120,19 @@ def map_unit_delivery_statistics_dto(
         unit_name=unit_delivery_statistics['unitName'],
         delivery_sales=unit_delivery_statistics['deliverySales'],
         delivery_orders_count=unit_delivery_statistics['deliveryOrdersCount'],
-        average_delivery_order_fulfillment_time=unit_delivery_statistics['avgDeliveryOrderFulfillmentTime'],
+        average_delivery_order_fulfillment_time=unit_delivery_statistics[
+            'avgDeliveryOrderFulfillmentTime'],
         average_cooking_time=unit_delivery_statistics['avgCookingTime'],
-        average_heated_shelf_time=unit_delivery_statistics['avgHeatedShelfTime'],
+        average_heated_shelf_time=unit_delivery_statistics[
+            'avgHeatedShelfTime'],
         average_order_trip_time=unit_delivery_statistics['avgOrderTripTime'],
         late_orders_count=unit_delivery_statistics['lateOrdersCount'],
         trips_count=unit_delivery_statistics['tripsCount'],
         trips_duration=unit_delivery_statistics['tripsDuration'],
-        couriers_shifts_duration=unit_delivery_statistics['couriersShiftsDuration'],
-        orders_with_courier_app_count=unit_delivery_statistics['ordersWithCourierAppCount'],
+        couriers_shifts_duration=unit_delivery_statistics[
+            'couriersShiftsDuration'],
+        orders_with_courier_app_count=unit_delivery_statistics[
+            'ordersWithCourierAppCount'],
     )
 
 
@@ -162,4 +167,24 @@ def map_courier_order_dto(
         unit_name=courier_order['unitName'],
         was_late_delivery_voucher_given=courier_order[
             'wasLateDeliveryVoucherGiven'],
+    )
+
+
+def map_unit_orders_handover_statistics(
+        unit_orders_handover_statistics: raw_models.UnitOrdersHandoverStatistics,
+) -> models.UnitOrdersHandoverStatistics:
+    return models.UnitOrdersHandoverStatistics(
+        unit_uuid=UUID(unit_orders_handover_statistics['unitId']),
+        unit_name=unit_orders_handover_statistics['unitName'],
+        average_tracking_pending_time=(
+            unit_orders_handover_statistics['avgTrackingPendingTime']
+        ),
+        average_cooking_time=unit_orders_handover_statistics['avgCookingTime'],
+        average_heated_shelf_time=(
+            unit_orders_handover_statistics['avgHeatedShelfTime']
+        ),
+        average_order_handover_time=(
+            unit_orders_handover_statistics['avgOrderHandoverTime']
+        ),
+        orders_count=unit_orders_handover_statistics['ordersCount']
     )
