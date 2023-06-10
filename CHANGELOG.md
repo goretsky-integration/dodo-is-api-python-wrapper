@@ -3,6 +3,7 @@
 ## Addded:
 
 - Add orders handover statistics API (both sync and async).
+- Add logging via `structlog`.
 
 ---
 
