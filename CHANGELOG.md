@@ -1,3 +1,11 @@
+# 0.6.0 (2023-06-10)
+
+## Addded:
+
+- Add orders handover statistics API (both sync and async).
+
+---
+
 # 0.5.0 (2023-05-09)
 
 ## Added:
