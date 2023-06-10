@@ -9,6 +9,7 @@ packages = [{include = "dodo_is_api"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.23.3"
+structlog = "^23.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
