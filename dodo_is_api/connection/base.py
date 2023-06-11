@@ -1,4 +1,3 @@
-from abc import ABC
 from collections.abc import Iterable
 from datetime import datetime
 from functools import cached_property
@@ -83,22 +82,14 @@ def raise_for_status(response: httpx.Response) -> None:
     raise exception_class
 
 
-class BaseDodoISAPIConnection(ABC):
-
-    __slots__ = (
-        '_http_client',
-        '_access_token',
-        '_country_code',
-    )
+class BaseDodoISAPIConnection:
 
     def __init__(
             self,
             *,
-            http_client: httpx.Client | httpx.AsyncClient,
             access_token: str,
             country_code: models.CountryCode,
     ):
-        self._http_client = http_client
         self._access_token = access_token
         self._country_code = country_code
 

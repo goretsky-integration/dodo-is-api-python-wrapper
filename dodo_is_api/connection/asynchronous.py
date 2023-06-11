@@ -20,7 +20,18 @@ __all__ = ('AsyncDodoISAPIConnection',)
 
 class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
 
-    _http_client: httpx.AsyncClient
+    def __init__(
+            self,
+            *,
+            http_client: httpx.AsyncClient,
+            access_token: str,
+            country_code: models.CountryCode,
+    ):
+        super().__init__(
+            access_token=access_token,
+            country_code=country_code,
+        )
+        self._http_client = http_client
 
     # Production API
 
@@ -56,6 +67,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
         response = await self._http_client.get(
             url=url,
             params=request_query_params,
+            headers=self.request_headers,
         )
         response_data: dict = response.json()
 
@@ -96,6 +108,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
         response = await self._http_client.get(
             url=url,
             params=request_query_params,
+            headers=self.request_headers,
         )
         response_data: dict = response.json()
 
@@ -145,6 +158,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
             response = await self._http_client.get(
                 url=url,
                 params=request_query_params,
+                headers=self.request_headers,
             )
 
             logger.info(
@@ -193,7 +207,11 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
             unit_uuids=units,
         )
 
-        response = await self._http_client.get(url, params=request_query_params)
+        response = await self._http_client.get(
+            url=url,
+            params=request_query_params,
+            headers=self.request_headers,
+        )
         raise_for_status(response)
 
         response_data: dict = response.json()
@@ -207,7 +225,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
             *,
             from_date: datetime,
             to_date: datetime,
-            unit_uuids: Iterable[UUID],
+            units: Iterable[UUID],
     ) -> list[models.StopSaleBySalesChannel]:
         """
         Retrieve stop sales by sales channels.
@@ -218,7 +236,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
         Keyword Args:
             from_date: start of period in ISO 8601 format.
             to_date: end of period in ISO 8601 format.
-            unit_uuids: collection of unit's UUIDs.
+            units: collection of unit's UUIDs.
 
         Returns:
             List of stop sales by sales channels.
@@ -228,10 +246,14 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
         request_query_params = build_request_query_params(
             from_date=from_date,
             to_date=to_date,
-            unit_uuids=unit_uuids,
+            unit_uuids=units,
         )
 
-        response = await self._http_client.get(url, params=request_query_params)
+        response = await self._http_client.get(
+            url=url,
+            params=request_query_params,
+            headers=self.request_headers,
+        )
         raise_for_status(response)
 
         response_data: dict = response.json()
@@ -267,7 +289,11 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
             unit_uuids=units,
         )
 
-        response = await self._http_client.get(url, params=request_query_params)
+        response = await self._http_client.get(
+            url=url,
+            params=request_query_params,
+            headers=self.request_headers,
+        )
         raise_for_status(response)
 
         response_data: dict = response.json()
@@ -317,6 +343,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
             response = await self._http_client.get(
                 url=url,
                 params=request_query_params,
+                headers=self.request_headers,
             )
             raise_for_status(response)
 
@@ -398,6 +425,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
         response = await self._http_client.get(
             url=url,
             params=request_query_params,
+            headers=self.request_headers,
         )
         raise_for_status(response)
 
@@ -446,6 +474,7 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
             response = await self._http_client.get(
                 url=url,
                 params=request_query_params,
+                headers=self.request_headers,
             )
             raise_for_status(response)
 
