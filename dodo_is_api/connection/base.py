@@ -1,14 +1,23 @@
+from abc import ABC
 from collections.abc import Iterable
+from datetime import datetime
+from functools import cached_property
 from uuid import UUID
 
 import httpx
 
-from .. import exceptions
+from .. import exceptions, models
 
 __all__ = (
+    'build_request_query_params',
     'concatenate_uuids',
-    'raise_for_status'
+    'raise_for_status',
+    'BaseDodoISAPIConnection',
 )
+
+
+def kebab_case_to_pascal_case(text: str) -> str:
+    return ''.join(word.capitalize() for word in text.split('-'))
 
 
 def concatenate_uuids(uuids: Iterable[UUID], join_symbol: str = ',') -> str:
@@ -28,6 +37,38 @@ def concatenate_uuids(uuids: Iterable[UUID], join_symbol: str = ',') -> str:
     return join_symbol.join((uuid.hex for uuid in uuids))
 
 
+def build_request_query_params(
+        *,
+        from_date: datetime | None = None,
+        to_date: datetime | None = None,
+        unit_uuids: Iterable[UUID] | None = None,
+        take: int | None = None,
+        skip: int | None = None,
+        sales_channels: Iterable[models.SalesChannel] | None = None,
+) -> dict:
+    query_params = {}
+
+    if from_date is not None and to_date is not None:
+        query_params['from'] = from_date.strftime('%Y-%m-%dT%H:%M:%S')
+        query_params['to'] = to_date.strftime('%Y-%m-%dT%H:%M:%S')
+
+    if unit_uuids is not None:
+        query_params['units'] = concatenate_uuids(unit_uuids)
+
+    if take is not None:
+        query_params['take'] = take
+    if skip is not None:
+        query_params['skip'] = skip
+
+    if sales_channels is not None:
+        query_params['salesChannels'] = ','.join(
+            kebab_case_to_pascal_case(sales_channel)
+            for sales_channel in sales_channels
+        )
+
+    return query_params
+
+
 def raise_for_status(response: httpx.Response) -> None:
     if response.is_success:
         return
@@ -40,3 +81,33 @@ def raise_for_status(response: httpx.Response) -> None:
     exception_class = status_code_to_exception_class.get(response.status_code,
                                                          exceptions.DodoISAPIError)
     raise exception_class
+
+
+class BaseDodoISAPIConnection(ABC):
+
+    __slots__ = (
+        '_http_client',
+        '_access_token',
+        '_country_code',
+    )
+
+    def __init__(
+            self,
+            *,
+            http_client: httpx.Client | httpx.AsyncClient,
+            access_token: str,
+            country_code: models.CountryCode,
+    ):
+        self._http_client = http_client
+        self._access_token = access_token
+        self._country_code = country_code
+
+    @cached_property
+    def base_url(self) -> str:
+        return f'https://api.dodois.io/dodopizza/{self._country_code}'
+
+    @cached_property
+    def request_headers(self) -> dict:
+        return {
+            'Authorization': f'Bearer {self._access_token}',
+        }
