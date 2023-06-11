@@ -13,3 +13,6 @@ class UnitOrdersHandoverStatistics(BaseModel):
     average_heated_shelf_time: int = Field(alias='avgHeatedShelfTime')
     average_order_handover_time: int = Field(alias='avgOrderHandoverTime')
     orders_count: int = Field(alias='ordersCount')
+
+    class Config:
+        allow_population_by_field_name = True

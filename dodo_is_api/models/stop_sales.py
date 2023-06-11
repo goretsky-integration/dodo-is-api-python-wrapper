@@ -24,6 +24,9 @@ class StopSale(BaseModel):
     stopped_by_user_id: UUID = Field(alias='stoppedByUserId')
     resumed_by_user_id: UUID | None = Field(alias='resumedByUserId')
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class StopSaleBySalesChannel(StopSale):
     sales_channel_name: SalesChannel = Field(alias='salesChannelName')
