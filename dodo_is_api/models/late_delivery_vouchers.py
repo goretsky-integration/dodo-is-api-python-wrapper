@@ -1,18 +1,22 @@
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 __all__ = ('LateDeliveryVoucher',)
 
 
 class LateDeliveryVoucher(BaseModel):
-    order_id: UUID
-    order_number: str
-    order_accepted_at_local: datetime
-    unit_uuid: UUID
-    predicted_delivery_time_local: datetime
-    order_fulfilment_flag_at_local: datetime | None
-    delivery_deadline_local: datetime
-    issuer_name: str | None
-    courier_staff_id: UUID | None
+    order_id: UUID = Field(alias='orderId')
+    order_number: str = Field(alias='orderNumber')
+    order_accepted_at_local: datetime = Field(alias='orderAcceptedAtLocal')
+    unit_uuid: UUID = Field(alias='unitId')
+    predicted_delivery_time_local: datetime = Field(
+        alias='predictedDeliveryTimeLocal',
+    )
+    order_fulfilment_flag_at_local: datetime | None = Field(
+        alias='orderFulfilmentFlagAtLocal',
+    )
+    delivery_deadline_local: datetime = Field(alias='deliveryDeadlineLocal')
+    issuer_name: str | None = Field(alias='issuerName')
+    courier_staff_id: UUID | None = Field(alias='courierStaffId')

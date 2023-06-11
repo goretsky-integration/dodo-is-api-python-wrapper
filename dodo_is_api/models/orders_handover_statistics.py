@@ -1,15 +1,15 @@
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 __all__ = ('UnitOrdersHandoverStatistics',)
 
 
 class UnitOrdersHandoverStatistics(BaseModel):
-    unit_uuid: UUID
-    unit_name: str
-    average_tracking_pending_time: int
-    average_cooking_time: int
-    average_heated_shelf_time: int
-    average_order_handover_time: int
-    orders_count: int
+    unit_uuid: UUID = Field(alias='unitId')
+    unit_name: str = Field(alias='unitName')
+    average_tracking_pending_time: int = Field(alias='avgTrackingPendingTime')
+    average_cooking_time: int = Field(alias='avgCookingTime')
+    average_heated_shelf_time: int = Field(alias='avgHeatedShelfTime')
+    average_order_handover_time: int = Field(alias='avgOrderHandoverTime')
+    orders_count: int = Field(alias='ordersCount')
