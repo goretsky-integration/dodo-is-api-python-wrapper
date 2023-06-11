@@ -35,3 +35,6 @@ class CourierOrder(BaseModel):
     was_late_delivery_voucher_given: bool = Field(
         alias='wasLateDeliveryVoucherGiven',
     )
+
+    class Config:
+        allow_population_by_field_name = True

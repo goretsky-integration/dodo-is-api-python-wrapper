@@ -20,3 +20,6 @@ class LateDeliveryVoucher(BaseModel):
     delivery_deadline_local: datetime = Field(alias='deliveryDeadlineLocal')
     issuer_name: str | None = Field(alias='issuerName')
     courier_staff_id: UUID | None = Field(alias='courierStaffId')
+
+    class Config:
+        allow_population_by_field_name = True

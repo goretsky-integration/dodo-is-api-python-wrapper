@@ -17,3 +17,6 @@ class UnitProductionProductivityStatistics(BaseModel):
         alias='ordersPerCourierLabourHour',
     )
     kitchen_speed_percentage: float = Field(alias='kitchenSpeedPercentage')
+
+    class Config:
+        allow_population_by_field_name = True

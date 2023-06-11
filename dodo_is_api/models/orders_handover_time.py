@@ -20,3 +20,6 @@ class OrderHandoverTime(BaseModel):
     cooking_time: int = Field(alias='cookingTime')
     heated_shelf_time: int = Field(alias='heatedShelfTime')
     order_source: OrderSource = Field(alias='orderSource')
+
+    class Config:
+        allow_population_by_field_name = True
