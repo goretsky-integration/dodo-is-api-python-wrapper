@@ -1,6 +1,14 @@
+# 0.7.0 (2023-06-11)
+
+## Changed:
+
+- Refactor API.
+
+---
+
 # 0.6.1 (2023-06-10)
 
-## Addded:
+## Added:
 
 - Add orders handover statistics API (both sync and async).
 - Add logging via `structlog`.

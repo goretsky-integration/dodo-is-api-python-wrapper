@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dodo-is-api"
-version = "0.6.1"
+version = "0.7.0"
 description = ""
 authors = ["Eldos <eldos.baktybekov@gmail.com>"]
 readme = "README.md"
@@ -10,6 +10,7 @@ packages = [{include = "dodo_is_api"}]
 python = "^3.11"
 httpx = "^0.23.3"
 structlog = "^23.1.0"
+pydantic = "^1.10.9"
 
 
 [tool.poetry.group.dev.dependencies]
