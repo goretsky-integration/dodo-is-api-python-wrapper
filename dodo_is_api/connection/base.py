@@ -15,10 +15,6 @@ __all__ = (
 )
 
 
-def kebab_case_to_pascal_case(text: str) -> str:
-    return ''.join(word.capitalize() for word in text.split('-'))
-
-
 def concatenate_uuids(uuids: Iterable[UUID], join_symbol: str = ',') -> str:
     """Convert UUIDs collection to UUIDs string suitable for Dodo IS API.
 
@@ -60,10 +56,17 @@ def build_request_query_params(
         query_params['skip'] = skip
 
     if sales_channels is not None:
-        query_params['salesChannels'] = ','.join(
-            kebab_case_to_pascal_case(sales_channel)
-            for sales_channel in sales_channels
-        )
+        sales_channel_to_request_query_param = {
+            models.SalesChannel.DINE_IN: 'DineIn',
+            models.SalesChannel.TAKEAWAY: 'TakeAway',
+        }
+
+        query_params['salesChannels'] = [
+            sales_channel_to_request_query_param.get(
+                sales_channel,
+                sales_channel,
+            ) for sales_channel in sales_channels
+        ]
 
     return query_params
 

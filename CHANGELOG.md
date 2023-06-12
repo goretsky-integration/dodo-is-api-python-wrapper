@@ -1,3 +1,19 @@
+# 0.7.2 (2023-06-12)
+
+-- Changed:
+
+- Fix SalesChannel parsing.
+
+---
+
+# 0.7.1 (2023-06-11)
+
+## Changed:
+
+- Allow models instantiation by population fields by both names and aliases.
+
+---
+
 # 0.7.0 (2023-06-11)
 
 ## Changed:
