@@ -11,6 +11,7 @@ __all__ = (
     'StopSaleByProduct',
     'StopSaleByIngredient',
     'StopSaleBySalesChannel',
+    'StopSaleBySector',
 )
 
 
@@ -18,7 +19,6 @@ class StopSale(BaseModel):
     id: UUID
     unit_uuid: UUID = Field(alias='unitId')
     unit_name: str = Field(alias='unitName')
-    reason: str
     started_at: datetime = Field(alias='startedAt')
     ended_at: datetime | None = Field(alias='endedAt')
     stopped_by_user_id: UUID = Field(alias='stoppedByUserId')
@@ -29,13 +29,23 @@ class StopSale(BaseModel):
 
 
 class StopSaleBySalesChannel(StopSale):
+    reason: str
     sales_channel_name: SalesChannel = Field(alias='salesChannelName')
     channel_stop_type: ChannelStopType = Field(alias='channelStopType')
 
 
 class StopSaleByIngredient(StopSale):
+    reason: str
     ingredient_name: str = Field(alias='ingredientName')
 
 
 class StopSaleByProduct(StopSale):
+    reason: str
     product_name: str = Field(alias='productName')
+
+
+class StopSaleBySector(StopSale):
+    sector_name: str = Field(alias='sectorName')
+    is_sub_sector: bool = Field(alias='isSubSector')
+    stopped_by_user_id: UUID = Field(alias='suspendedByUserId')
+    resumed_by_user_id: UUID | None = Field(alias='resumedUserId')

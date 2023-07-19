@@ -304,6 +304,46 @@ class AsyncDodoISAPIConnection(BaseDodoISAPIConnection):
 
     # Delivery API
 
+    async def get_stop_sales_by_sectors(
+            self,
+            *,
+            from_date: datetime,
+            to_date: datetime,
+            units: Iterable[UUID],
+    ) -> list:
+        """Retrieve stop sales by sectors.
+
+        References:
+            Documentation: https://dodo-brands.stoplight.io/docs/dodo-is/3e817cbe2a17a-dostavka-stop-prodazhi-po-sektoram
+
+        Keyword Args:
+            from_date: start of period in ISO 8601 format.
+            to_date: end of period in ISO 8601 format.
+            units: collection of unit's UUIDs.
+
+        Returns:
+            List of stop sales by sectors.
+        """
+        url = f'{self.base_url}/delivery/stop-sales-sectors'
+        request_query_params = build_request_query_params(
+            from_date=from_date,
+            to_date=to_date,
+            unit_uuids=units,
+        )
+
+        response = await self._http_client.get(
+            url=url,
+            params=request_query_params,
+            headers=self.request_headers,
+        )
+        raise_for_status(response)
+
+        response_data: dict = response.json()
+        return parse_obj_as(
+            list[models.StopSaleBySector],
+            response_data['stopSalesBySectors'],
+        )
+
     async def iter_late_delivery_vouchers(
             self,
             *,
