@@ -1,3 +1,11 @@
+# 0.8.0 (2023-07-19)
+
+## Added:
+
+- Stop sales by sectors.
+
+---
+
 # 0.7.2 (2023-06-12)
 
 -- Changed:
