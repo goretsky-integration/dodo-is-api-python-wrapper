@@ -97,7 +97,7 @@ async def main():
     to_date = datetime(2004, 10, 7, 23)
     units = [UUID('ec81831c-b8a7-4ba8-a6aa-7ae7d0c4e0bb')]
 
-    with httpx.AsyncClient() as http_client:
+    async with httpx.AsyncClient() as http_client:
         connection = AsyncDodoISAPIConnection(
             http_client=http_client,
             access_token=access_token,
